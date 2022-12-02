@@ -87,7 +87,7 @@ int main()
     pushQueue(a);
     pushQueue(a);
 
-    printf("%d\n",popQueue(a));
+    printf("%d\n"`,popQueue(a));
 
     pushQueue(a);
 
