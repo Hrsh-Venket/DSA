@@ -1,0 +1,126 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
+
+// create node data structure
+struct node {
+    int data;
+    struct node *next;
+}*head;
+
+
+// function to create a linked list by taking size of input n and the first n space separate values
+struct node *createQueue()
+{
+    int n; // assume n is an integer
+    struct node *newNode, *temp;
+    int data;
+    // take value n
+    scanf("%d", &n);
+
+    if (n <= 0) 
+    {
+        printf("Bitch");
+        exit(0);
+    }
+
+    head = (struct node *)malloc(sizeof(struct node));
+
+    // Terminate if memory not allocated
+    if(head == NULL)
+    {
+        printf("Unable to allocate memory.");
+        exit(0);
+    }
+
+    // Input data of node from the user
+    scanf("%d", &data);
+
+    head->data = data; // Link data field with data
+    head->next = NULL; // Link address field to NULL
+
+    temp = head;
+    for(int i = 1; i < n; i++)
+    {
+        newNode = (struct node *)malloc(sizeof(struct node));
+
+        /* If memory is not allocated for newNode */
+        if(newNode == NULL)
+        {
+            printf("Unable to allocate memory.");
+            break;
+        }
+
+        scanf("%d", &data);
+
+        newNode->data = data; // Link data field of newNode
+        newNode->next = NULL; // Make sure new node points to NULL 
+
+        temp->next = newNode; // Link previous node with newNode
+        temp = temp->next;    // Make current node as previous node
+    }
+    return head;
+}
+
+void traverseList(struct node *head)
+{
+    struct node *temp = head;
+    if (head == NULL)
+    {
+        printf("List is empty");
+        return;
+    }
+    while (temp != NULL)
+    {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+struct node *popQueue(struct node *head)
+{
+    struct node *temp = head;
+
+    head = head -> next;
+
+    free(temp);
+
+    return (head);
+}
+
+struct node *pushQueue(struct node *head)
+{
+    int a;
+    struct node *temp = head;
+    struct node *newNode = (struct node *)malloc(sizeof(struct node));
+
+    printf("enter the term you want to push\n");
+    scanf("%d", &(newNode->data));
+
+    while ((temp->next) != NULL)
+    {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+    newNode->next = NULL;
+    return head;
+}
+
+int main()
+{
+    struct node *head = createQueue();
+
+    printf("list after an element has been popped\n");
+
+    head = popQueue(head);
+    traverseList(head);
+
+    head = pushQueue(head);
+
+    traverseList(head);
+
+
+    return 0;
+}
